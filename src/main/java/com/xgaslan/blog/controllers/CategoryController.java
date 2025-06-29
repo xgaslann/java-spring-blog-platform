@@ -2,13 +2,13 @@ package com.xgaslan.blog.controllers;
 
 import com.xgaslan.blog.domain.entities.Category;
 import com.xgaslan.blog.domain.mappers.ICategoryMapper;
+import com.xgaslan.blog.domain.models.category.CategoryCreateModel;
 import com.xgaslan.blog.domain.models.category.CategoryViewModel;
 import com.xgaslan.blog.services.ICategoryService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +25,12 @@ public class CategoryController {
     public ResponseEntity<List<CategoryViewModel>> getAll(){
         List<CategoryViewModel> categories = service.getAll().stream().map(mapper::toViewModel).toList();
         return ResponseEntity.ok().body(categories);
+    }
+
+    @PostMapping
+    public ResponseEntity<CategoryViewModel> create(@Valid @RequestBody CategoryCreateModel model) {
+        Category category = mapper.toEntity(model);
+        Category createdCategory = service.create(category);
+        return ResponseEntity.status(201).body(mapper.toViewModel(createdCategory));
     }
 }

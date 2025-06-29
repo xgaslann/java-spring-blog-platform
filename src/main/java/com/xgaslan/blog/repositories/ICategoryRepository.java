@@ -10,4 +10,6 @@ import java.util.UUID;
 public interface ICategoryRepository extends IBaseRepository<Category, UUID> {
     @Query("SELECT c FROM Category c LEFT JOIN FETCH c.posts")
     List<Category> findAllWithPostCount();
+
+    boolean existsByNameIgnoreCase(String name);
 }
