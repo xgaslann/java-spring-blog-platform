@@ -1,17 +1,16 @@
 package com.xgaslan.blog.domain.models.category;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.xgaslan.blog.domain.models.base.BaseModel;
+import lombok.*;
 
 import java.util.UUID;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryViewModel {
+public class CategoryViewModel extends BaseModel {
     private UUID id;
 
     private String name;

@@ -2,6 +2,9 @@ spring:
   application:
     name: blog
 
+jwt:
+  secret: 3a07ff5f7bb03d7da86e3590e1778f090ef5b1dd1c5bec0085d930e3cd8034c8
+
   datasource:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres

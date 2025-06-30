@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -17,7 +19,8 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public List<Category> getAll() {
-        return repository.findAllWithPostCount();
+        var all = repository.findAllWithPostCount();
+        return all;
     }
 
     @Override
@@ -27,5 +30,16 @@ public class CategoryService implements ICategoryService {
             throw new IllegalArgumentException("Category already exists with name: " + category.getName());
 
         return repository.save(category);
+    }
+
+    @Override
+    public void delete(UUID id) {
+        Optional<Category> category = repository.findById(id);
+        if (category.isPresent() && !category.get().isDeleted()) {
+            if(!category.get().getPosts().isEmpty()){
+                throw new IllegalStateException("Cannot delete category with existing posts");
+            }
+            repository.deleteById(id);
+        }
     }
 }
