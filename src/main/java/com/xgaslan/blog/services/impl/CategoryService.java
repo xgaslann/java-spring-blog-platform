@@ -19,8 +19,7 @@ public class CategoryService implements ICategoryService {
 
     @Override
     public List<Category> getAll() {
-        var all = repository.findAllWithPostCount();
-        return all;
+        return repository.findAllWithPostCount();
     }
 
     @Override
