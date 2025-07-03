@@ -116,12 +116,7 @@ public class PostService implements IPostService {
 
     @Override
     public void delete(UUID id, User user) {
-        Post post = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Post not found with id: " + id));
-
-        if (!post.getAuthor().getId().equals(user.getId())) {
-            throw new IllegalArgumentException("You are not authorized to delete this post.");
-        }
+        Post post = getById(id, user);
 
         repository.delete(post);
     }
