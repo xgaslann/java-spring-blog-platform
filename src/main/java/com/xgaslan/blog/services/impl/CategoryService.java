@@ -3,6 +3,7 @@ package com.xgaslan.blog.services.impl;
 import com.xgaslan.blog.domain.entities.Category;
 import com.xgaslan.blog.repositories.ICategoryRepository;
 import com.xgaslan.blog.services.ICategoryService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,11 @@ public class CategoryService implements ICategoryService {
             throw new IllegalArgumentException("Category already exists with name: " + category.getName());
 
         return repository.save(category);
+    }
+
+    @Override
+    public Category getById(UUID id) {
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + id));
     }
 
     @Override

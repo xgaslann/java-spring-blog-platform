@@ -10,5 +10,7 @@ public interface ICategoryService {
 
     Category create(Category entity);
 
+    Category getById(UUID id);
+
     void delete(UUID  id);
 }

@@ -1,6 +1,7 @@
 package com.xgaslan.blog.controllers;
 
 import com.xgaslan.blog.domain.models.result.ResultModel;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,5 +53,15 @@ public class ErrorController {
                 .build();
 
         return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ResultModel> handleEntityNotFoundException(EntityNotFoundException e) {
+        ResultModel result = ResultModel.builder()
+                .status(HttpStatus.NOT_FOUND.value())
+                .message("Resource not found: " + e.getMessage())
+                .build();
+
+        return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
     }
 }

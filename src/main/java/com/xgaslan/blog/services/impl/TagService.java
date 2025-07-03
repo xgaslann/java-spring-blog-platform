@@ -3,6 +3,7 @@ package com.xgaslan.blog.services.impl;
 import com.xgaslan.blog.domain.entities.Tag;
 import com.xgaslan.blog.repositories.ITagRepository;
 import com.xgaslan.blog.services.ITagService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -41,6 +42,21 @@ public class TagService implements ITagService {
         savedTags.addAll(existingTags);
 
         return savedTags;
+    }
+
+    @Override
+    public Tag getById(UUID id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Tag not found with id: " + id));
+    }
+
+    @Override
+    public List<Tag> getByIds(Set<UUID> ids) {
+        List<Tag> tags = repository.findAllById(ids);
+        if (tags.size() != ids.size()) {
+            throw new EntityNotFoundException("Some tags not found for the provided IDs");
+        }
+        return tags;
     }
 
     @Override

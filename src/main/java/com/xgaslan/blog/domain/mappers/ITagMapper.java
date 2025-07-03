@@ -1,11 +1,8 @@
 package com.xgaslan.blog.domain.mappers;
 
-import com.xgaslan.blog.domain.entities.Category;
 import com.xgaslan.blog.domain.entities.Post;
 import com.xgaslan.blog.domain.entities.Tag;
 import com.xgaslan.blog.domain.enums.PostStatus;
-import com.xgaslan.blog.domain.models.category.CategoryCreateModel;
-import com.xgaslan.blog.domain.models.category.CategoryUpdateModel;
 import com.xgaslan.blog.domain.models.tag.TagCreateModel;
 import com.xgaslan.blog.domain.models.tag.TagViewModel;
 import org.mapstruct.Mapper;
